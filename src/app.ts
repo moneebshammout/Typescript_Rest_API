@@ -3,11 +3,10 @@ import express, { Express } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import winston from 'winston';
-import { errorMiddleware } from '@middleware/error-handler';
+import errorMiddleware from '@middleware/error-handler';
 import { errorSubscriber } from '@utils/errors';
 import appRouter from '@routes/index';
-
-const app: Express = express();
+import { sequelize } from '@models/index';
 
 class App {
   public express: Express;
@@ -43,7 +42,8 @@ class App {
   }
 
   public listen(): void {
-    this.express.listen(this.port, () => {
+    this.express.listen(this.port, async (): Promise<void> => {
+      await sequelize.sync({});
       console.log(`Server listening on http://localhost:${this.port}`);
     });
   }
