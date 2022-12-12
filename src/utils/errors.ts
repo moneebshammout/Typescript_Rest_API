@@ -1,8 +1,9 @@
 import winston from 'winston';
 import { exec, ExecException } from 'child_process';
+import { statusCodes } from '../constants';
 
 /**
- * Class for customizing errors.
+ * Class for customizing http  errors.
  */
 class HttpException extends Error {
   public statusCode: number;
@@ -29,7 +30,7 @@ const errorSubscriber = (
     //logs errors to a log file
     winston.error(ex.message, {
       action: 'restart',
-      statusCode: 500,
+      statusCode: statusCodes.server,
       stack: ex.stack
     });
 
