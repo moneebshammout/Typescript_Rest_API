@@ -3,6 +3,7 @@ import { Request, Response } from 'express';
 import path from 'path';
 import fs from 'fs';
 import userRouter from './user.rout';
+import { statusCodes } from '../constants';
 
 const router: AsyncRouterInstance = AsyncRouter();
 
@@ -19,6 +20,7 @@ router.get('/health', async (req: Request, res: Response): Promise<void> => {
   } else {
     res.write(contents);
   }
+
   res.end();
 });
 
@@ -26,7 +28,7 @@ router.get('/health', async (req: Request, res: Response): Promise<void> => {
  * All un implemented routes goes here.
  */
 router.all('*', async (req: Request, res: Response): Promise<void> => {
-  res.status(404).send('You Arrived No Where 🤟');
+  res.status(statusCodes.notFound).send('You Arrived No Where 🤟');
 });
 
 export default router;

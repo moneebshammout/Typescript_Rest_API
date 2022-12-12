@@ -16,14 +16,14 @@ export type UserInput = Optional<UserAttributes, 'id'>;
 export type UserOutput = Required<UserAttributes>;
 
 class User extends Model<UserAttributes, UserInput> implements UserAttributes {
-  public id!: number;
-  public name!: string;
-  public email!: string;
-  public password!: string;
-  public salt!: string;
-  public last_login!: Date;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: number;
+  declare name: string;
+  declare email: string;
+  declare password: string;
+  declare salt: string;
+  declare last_login: Date;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 export default (sequelize: Sequelize) => {

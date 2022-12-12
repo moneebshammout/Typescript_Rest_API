@@ -1,6 +1,7 @@
 import { validationResult } from 'express-validator';
 import { formatResponse } from '@utils/requests';
 import { Request, Response, NextFunction } from 'express';
+import { statusCodes } from '../constants';
 
 /**
  * Middleware for handling parameters validation.
@@ -12,6 +13,6 @@ export default (req: Request, res: Response, next: NextFunction) => {
   }
 
   return res
-    .status(400)
+    .status(statusCodes.badRequest)
     .json(formatResponse({ error: errorsList.array() }, 'Invalid data', false));
 };

@@ -16,11 +16,11 @@ class Category
   extends Model<CategoryAttributes, CategoryInput>
   implements CategoryAttributes
 {
-  public id!: number;
-  public user_id!: number;
-  public name!: string;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: number;
+  declare user_id: number;
+  declare name: string;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 export default (sequelize: Sequelize) => {

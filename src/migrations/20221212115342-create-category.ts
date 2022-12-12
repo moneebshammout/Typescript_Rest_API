@@ -23,11 +23,17 @@ module.exports = {
         },
         createdAt: {
           allowNull: false,
-          type: DataTypes.DATE
+          type: DataTypes.DATE,
+          defaultValue: DataTypes.NOW,
+
+          field: 'created_at'
         },
         updatedAt: {
           allowNull: false,
-          type: DataTypes.DATE
+          type: DataTypes.DATE,
+          defaultValue: DataTypes.NOW,
+
+          field: 'updated_at'
         }
       });
     }),

@@ -7,7 +7,7 @@ import errorMiddleware from '@middleware/error-handler';
 import { errorSubscriber } from '@utils/errors';
 import appRouter from '@routes/index';
 import { sequelize } from '@models/index';
-
+import { establishRedisConnection } from '@utils/redis';
 class App {
   public express: Express;
   public port: string | undefined;
@@ -15,6 +15,7 @@ class App {
   constructor(port: string | undefined) {
     this.express = express();
     this.port = port;
+    establishRedisConnection();
     this.initializeErrorHandling();
     this.initializeMiddleware();
     this.initializeErrorMiddleWare();
@@ -43,7 +44,7 @@ class App {
 
   public listen(): void {
     this.express.listen(this.port, async (): Promise<void> => {
-      await sequelize.sync({});
+      await sequelize.sync();
       console.log(`Server listening on http://localhost:${this.port}`);
     });
   }

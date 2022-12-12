@@ -31,21 +31,21 @@ const Expense = ExpenseInit(sequelize);
  * Models associations.
  */
 User.hasMany(Category);
-Category.hasOne(User, {
+Category.belongsTo(User, {
   foreignKey: {
     name: 'user_id'
   }
 });
 
 User.hasMany(Expense);
-Expense.hasOne(User, {
+Expense.belongsTo(User, {
   foreignKey: {
     name: 'user_id'
   }
 });
 
 Category.hasMany(Expense);
-Expense.hasOne(Category, {
+Expense.belongsTo(Category, {
   foreignKey: {
     name: 'category_id'
   }

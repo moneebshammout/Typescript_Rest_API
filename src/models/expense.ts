@@ -18,13 +18,13 @@ class Expense
   extends Model<ExpenseAttributes, ExpenseInput>
   implements ExpenseAttributes
 {
-  public id!: number;
-  public user_id!: number;
-  public category_id!: number;
-  public amount!: number;
-  public spending_date!: Date;
-  public readonly createdAt!: Date;
-  public readonly updatedAt!: Date;
+  declare id: number;
+  declare user_id: number;
+  declare category_id: number;
+  declare amount: number;
+  declare spending_date: Date;
+  declare readonly createdAt: Date;
+  declare readonly updatedAt: Date;
 }
 
 export default (sequelize: Sequelize) => {
