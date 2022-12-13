@@ -1,10 +1,11 @@
 import { RequestHandler, Request, Response } from 'express';
 import { User } from '@models/index';
-import { HttpException } from '@utils/errors';
+import { UserAttributes } from '@models/user';
 import { formatResponse } from '@utils/requests';
 import { hashPassword, generateAuthToken, checkPassword } from '@utils/auth';
 import { currentDate } from '@utils/date';
-import { JWT_HEADER, statusCodes } from '../constants';
+import { getCache } from '@utils/redis';
+import { JWT_HEADER } from '../constants';
 
 /**
  * Creates user,generate jwt token and save session.
@@ -19,17 +20,7 @@ export const register: RequestHandler = async (
     password
   }: { email: string; name: string; password: string } = req.body;
 
-  const alreadyExist = await User.findOne({
-    where: { email }
-  });
-
-  if (alreadyExist != null) {
-    throw new HttpException(
-      statusCodes.conflict,
-      'A user with this email already exist'
-    );
-  }
-
+  await User.alreadyExist({ email });
   const { salt, hashedPassword } = await hashPassword(password);
   const user = await User.create({
     email,
@@ -55,16 +46,35 @@ export const login: RequestHandler = async (
 ): Promise<void> => {
   const { email, password }: { email: string; password: string } = req.body;
 
-  const user = await User.findOne({
-    where: { email }
-  });
-
-  if (user === null) {
-    throw new HttpException(statusCodes.notFound, 'User not found');
-  }
+  const user = (await User.doesNotExist({
+    email
+  })) as unknown as UserAttributes | null;
+  if (user === null) return;
 
   await checkPassword(password, user.password);
-  const token: string = await generateAuthToken({ email, id: user.id });
+  const cachedSession: string | null = await getCache(email);
+  let token: string;
 
-  res.header(JWT_HEADER, token).send(formatResponse(user, `session created`));
+  if (cachedSession) {
+    token = cachedSession;
+  } else {
+    token = await generateAuthToken({ email, id: user.id });
+    const last_login: Date = currentDate();
+    await User.update(
+      {
+        last_login
+      },
+      { where: { email } }
+    );
+    user.last_login = last_login;
+  }
+
+  res
+    .header(JWT_HEADER, token)
+    .send(
+      formatResponse(
+        user,
+        cachedSession ? 'session from cache' : 'session created'
+      )
+    );
 };

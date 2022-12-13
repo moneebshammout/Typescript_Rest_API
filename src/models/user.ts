@@ -1,8 +1,8 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, Optional } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
-
-interface UserAttributes {
-  id?: number;
+import BaseModel from './base';
+export interface UserAttributes {
+  id: number;
   name: string;
   email: string;
   password: string;
@@ -15,7 +15,10 @@ interface UserAttributes {
 export type UserInput = Optional<UserAttributes, 'id'>;
 export type UserOutput = Required<UserAttributes>;
 
-class User extends Model<UserAttributes, UserInput> implements UserAttributes {
+export class User
+  extends BaseModel<UserAttributes, UserInput>
+  implements UserAttributes
+{
   declare id: number;
   declare name: string;
   declare email: string;
@@ -26,7 +29,7 @@ class User extends Model<UserAttributes, UserInput> implements UserAttributes {
   declare readonly updatedAt: Date;
 }
 
-export default (sequelize: Sequelize) => {
+export default (sequelize: Sequelize): typeof User => {
   User.init(
     {
       id: {
@@ -37,7 +40,8 @@ export default (sequelize: Sequelize) => {
       },
       email: {
         type: DataTypes.STRING,
-        unique: true
+        unique: true,
+        allowNull: false
       },
       name: {
         type: DataTypes.STRING,

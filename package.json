@@ -73,6 +73,7 @@
     "@utils/*": "build/utils",
     "@middleware": "build/middleware",
     "@routes": "build/routes",
-    "@validator": "build/validator"
+    "@validator": "build/validator",
+    "@custom-types": "build/custom-types"
   }
 }

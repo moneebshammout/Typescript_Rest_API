@@ -1,9 +1,10 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, Optional } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
+import BaseModel from './base';
 
 interface ExpenseAttributes {
   id?: number;
-  user_id: number;
+  userId: number;
   category_id: number;
   amount: number;
   spending_date: Date;
@@ -15,11 +16,11 @@ export type ExpenseInput = Optional<ExpenseAttributes, 'id'>;
 export type ExpenseOutput = Required<ExpenseAttributes>;
 
 class Expense
-  extends Model<ExpenseAttributes, ExpenseInput>
+  extends BaseModel<ExpenseAttributes, ExpenseInput>
   implements ExpenseAttributes
 {
   declare id: number;
-  declare user_id: number;
+  declare userId: number;
   declare category_id: number;
   declare amount: number;
   declare spending_date: Date;
@@ -36,7 +37,7 @@ export default (sequelize: Sequelize) => {
         autoIncrement: true,
         allowNull: false
       },
-      user_id: {
+      userId: {
         type: DataTypes.BIGINT,
         allowNull: false
       },

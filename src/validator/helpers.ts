@@ -1,5 +1,6 @@
 import { body, query, ValidationChain } from 'express-validator';
-
+import { HttpException } from '@utils/errors';
+import { statusCodes } from '../constants';
 /**
  * Create string validation fields.
  */
@@ -24,6 +25,32 @@ export const stringSchema = (
     .isString()
     .bail()
     .withMessage('must be string');
+};
+
+/**
+ * Create number validation fields.
+ */
+export const numberSchema = (
+  attribute: string,
+  type = 'body',
+  optional = false
+): ValidationChain => {
+  const chainType = type === 'body' ? body : query;
+  if (optional) {
+    return chainType(attribute)
+      .optional()
+      .isInt()
+      .bail()
+      .withMessage('must be an integer');
+  }
+
+  return chainType(attribute)
+    .exists({ checkFalsy: true })
+    .bail()
+    .withMessage(`${attribute} is null`)
+    .isInt()
+    .bail()
+    .withMessage('must be an Integer');
 };
 
 /**
@@ -97,3 +124,25 @@ export const passwordSchema = (): ValidationChain => {
       'password is weak must be min length of 8 and  have one upper,one lower,one number and one special character'
     );
 };
+
+//TODO:delete
+// /**
+//  * Create a custom validator to check one of the givin attributes must exist.
+//  */
+// export const atLeastOne = (attributeList: string[]) => {
+//   return body().custom((value, { req }) => {
+//     let exist = false;
+//     for (const attribute of attributeList) {
+//       if (attribute in req.body) {
+//         exist = true;
+//         break;
+//       }
+//     }
+//     if (!exist)
+//       throw new HttpException(
+//         statusCodes.badRequest,
+//         `At least one of ${attributeList} must exist`
+//       );
+//     return exist;
+//   });
+// };

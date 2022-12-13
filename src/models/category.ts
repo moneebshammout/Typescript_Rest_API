@@ -1,10 +1,11 @@
-import { DataTypes, Model, Optional } from 'sequelize';
+import { DataTypes, Optional } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
+import BaseModel from './base';
 
 interface CategoryAttributes {
   id?: number;
   name: string;
-  user_id: number;
+  userId: number;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -13,11 +14,11 @@ export type CategoryInput = Optional<CategoryAttributes, 'id'>;
 export type CategoryOutput = Required<CategoryAttributes>;
 
 class Category
-  extends Model<CategoryAttributes, CategoryInput>
+  extends BaseModel<CategoryAttributes, CategoryInput>
   implements CategoryAttributes
 {
   declare id: number;
-  declare user_id: number;
+  declare userId: number;
   declare name: string;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
@@ -32,13 +33,14 @@ export default (sequelize: Sequelize) => {
         autoIncrement: true,
         allowNull: false
       },
-      user_id: {
+      userId: {
         type: DataTypes.BIGINT,
         allowNull: false
       },
 
       name: {
         type: DataTypes.STRING,
+        unique: true,
         allowNull: false
       }
     },
