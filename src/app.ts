@@ -4,10 +4,12 @@ import cors from 'cors';
 import helmet from 'helmet';
 import winston from 'winston';
 import errorMiddleware from '@middleware/error-handler';
+import authMiddleware from '@middleware/auth-handler';
 import { errorSubscriber } from '@utils/errors';
 import appRouter from '@routes/index';
 import { sequelize } from '@models/index';
 import { establishRedisConnection } from '@utils/redis';
+
 class App {
   public express: Express;
   public port: string | undefined;
@@ -35,6 +37,7 @@ class App {
     this.express.use(cors());
     this.express.use(express.json());
     this.express.use(express.urlencoded({ extended: false }));
+    this.express.use(authMiddleware);
     this.express.use(appRouter);
   }
 

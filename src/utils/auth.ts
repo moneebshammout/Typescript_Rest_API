@@ -3,7 +3,8 @@ import { HttpException } from '@utils/errors';
 import jwt from 'jsonwebtoken';
 import { saveTempCache } from './redis';
 import { SESSION_EXPIRY, statusCodes } from '../constants';
-
+import { envVarsValidator } from '@utils/requests';
+import { authCredential } from '@custom-types/auth';
 /**
  * Hashes password and returns the hashed password with the salt.
  */
@@ -38,15 +39,10 @@ export const checkPassword = async (
  * Generates JWT token and saves session to redis.
  *
  */
-export const generateAuthToken = async (credentials: {
-  email: string;
-  id: number;
-}): Promise<string> => {
-  const { JWT_KEY } = process.env;
-  if (JWT_KEY === undefined) {
-    throw new HttpException(statusCodes.server, 'JWT key is missing');
-  }
-
+export const generateAuthToken = async (
+  credentials: authCredential
+): Promise<string> => {
+  const JWT_KEY = envVarsValidator('JWT_KEY');
   const token: string = jwt.sign(credentials, JWT_KEY);
   await saveTempCache(credentials.email, SESSION_EXPIRY, token);
 

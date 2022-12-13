@@ -12,13 +12,15 @@ module.exports = {
           autoIncrement: true,
           allowNull: false
         },
-        user_id: {
+        userId: {
           type: DataTypes.BIGINT,
-          allowNull: false
+          allowNull: false,
+          field: 'user_id'
         },
-        category_id: {
+        categoryId: {
           type: DataTypes.BIGINT,
-          allowNull: false
+          allowNull: false,
+          field: 'category_id'
         },
         amount: {
           type: DataTypes.FLOAT,

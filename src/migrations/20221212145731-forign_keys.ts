@@ -42,9 +42,12 @@ module.exports = {
   down: (queryInterface: QueryInterface): Promise<void> =>
     queryInterface.sequelize.transaction(async (transaction) => {
       await Promise.all([
-        queryInterface.removeConstraint('category', 'user_id'),
-        queryInterface.removeConstraint('expense', 'user_id'),
-        queryInterface.removeConstraint('expense', 'category_id')
+        queryInterface.removeConstraint('category', 'category_user_id_user_fk'),
+        queryInterface.removeConstraint('expense', 'expense_user_id_user_fk'),
+        queryInterface.removeConstraint(
+          'expense',
+          'expense_category_id_category_fk'
+        )
       ]);
     })
 };

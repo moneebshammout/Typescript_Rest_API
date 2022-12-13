@@ -12,13 +12,15 @@ module.exports = {
           autoIncrement: true,
           allowNull: false
         },
-        user_id: {
+        userId: {
           type: DataTypes.BIGINT,
-          allowNull: false
+          allowNull: false,
+          field: 'user_id'
         },
 
         name: {
           type: DataTypes.STRING,
+          unique: true,
           allowNull: false
         },
         createdAt: {
