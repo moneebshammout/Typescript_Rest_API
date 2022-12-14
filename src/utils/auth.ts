@@ -1,10 +1,11 @@
 import bcrypt from 'bcrypt';
-import { HttpException } from '@utils/errors';
 import jwt from 'jsonwebtoken';
-import { saveTempCache } from './redis';
-import { SESSION_EXPIRY, statusCodes } from '../constants';
 import { envVarsValidator } from '@utils/requests';
+import { saveTempCache } from '@utils/redis';
+import { HttpException } from '@utils/errors';
 import { authCredential } from '@custom-types/auth';
+import { SESSION_EXPIRY, statusCodes } from '../constants';
+
 /**
  * Hashes password and returns the hashed password with the salt.
  */

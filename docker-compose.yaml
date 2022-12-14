@@ -1,0 +1,66 @@
+version: '3.8'
+
+networks:
+  app-network:
+
+services:
+  node_redis:
+    container_name: node_redis
+    image: redis:7.0-alpine
+    networks:
+      - app-network
+    ports:
+      - 6379:6379
+    volumes:
+      - db_volume:/var/lib/redis/data
+
+  node_backend:
+    build: .
+    networks:
+      - app-network
+    ports:
+      - 3000:3000
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - PGUSER=postmoneeb
+      - PGPASSWORD=shammout123
+      - PGDATABASE=tempDB
+      - PGHOST=node_db
+      - JWT_KEY=my_secret_key
+      - REDIS_HOST=node_redis
+    depends_on:
+      - node_redis
+      - node_db
+
+  node_db:
+    container_name: node_db
+    image: postgres
+    networks:
+      - app-network
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=postmoneeb
+      - POSTGRES_PASSWORD=shammout123
+      - POSTGRES_DB=tempDB
+    volumes:
+      - db_volume:/var/lib/postgresql/data
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    networks:
+      - app-network
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: shammout123
+    ports:
+      - 5050:80
+    depends_on:
+      - node_db
+
+volumes:
+  db_volume: {}
+  redis_volume: {}

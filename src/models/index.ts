@@ -2,13 +2,14 @@
 
 import { Options } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const configDB = require('../config/config');
-const env = process.env.NODE_ENV || 'development';
-const config: Options = configDB[env as keyof typeof configDB];
 import UserInit from './user';
 import CategoryInit from './category';
 import ExpenseInit from './expense';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const configDB = require('../config/config');
+
+const env = process.env.NODE_ENV;
+const config: Options = configDB[env as keyof typeof configDB];
 
 /**
  * Initialize db connection

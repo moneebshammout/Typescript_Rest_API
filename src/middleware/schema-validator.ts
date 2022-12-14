@@ -1,6 +1,6 @@
+import { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 import { formatResponse } from '@utils/requests';
-import { Request, Response, NextFunction } from 'express';
 import { statusCodes } from '../constants';
 
 /**

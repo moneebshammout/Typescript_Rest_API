@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 import { HttpException } from '@utils/errors';
-import { JWT_HEADER, statusCodes } from '../constants';
 import { envVarsValidator } from '@utils/requests';
 import { getCache } from '@utils/redis';
+import { JWT_HEADER, statusCodes } from '../constants';
 
 /**
  * Middleware for handling authentication for routs.
@@ -35,5 +35,6 @@ export default async (req: Request, res: Response, next: NextFunction) => {
       throw new HttpException(statusCodes.unAuthorized, 'Session expired');
     }
   }
+
   next();
 };

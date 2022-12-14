@@ -1,5 +1,5 @@
-import { stringSchema, emailSchema, passwordSchema } from './helpers';
 import { ValidationChain } from 'express-validator';
+import { stringSchema, emailSchema, passwordSchema } from './helpers';
 
 export const loginSchema: ValidationChain[] = [emailSchema(), passwordSchema()];
 

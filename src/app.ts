@@ -47,7 +47,7 @@ class App {
 
   public listen(): void {
     this.express.listen(this.port, async (): Promise<void> => {
-      await sequelize.sync();
+      await sequelize.sync({ force: true });
       console.log(`Server listening on http://localhost:${this.port}`);
     });
   }
