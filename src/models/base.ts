@@ -5,8 +5,8 @@ import {
   ModelAttributes,
   CreationAttributes
 } from 'sequelize';
-import { statusCodes } from '../constants';
 import { HttpException } from '@utils/errors';
+import { statusCodes } from '../constants';
 
 /**
  * A base class to create custom method for all instances.

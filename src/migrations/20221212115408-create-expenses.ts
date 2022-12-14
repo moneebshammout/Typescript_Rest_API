@@ -28,7 +28,7 @@ module.exports = {
         },
         spendingDate: {
           allowNull: false,
-          type: DataTypes.DATE,
+          type: DataTypes.DATEONLY,
           field: 'spending_date'
         },
         createdAt: {

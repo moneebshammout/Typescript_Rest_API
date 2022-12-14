@@ -6,6 +6,7 @@ import { hashPassword, generateAuthToken, checkPassword } from '@utils/auth';
 import { currentDate } from '@utils/date';
 import { getCache } from '@utils/redis';
 import { JWT_HEADER } from '../constants';
+import { RegisterBodyType, LoginBodyType } from '@custom-types/body-params';
 
 /**
  * Creates user,generate jwt token and save session.
@@ -14,11 +15,7 @@ export const register: RequestHandler = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const {
-    email,
-    name,
-    password
-  }: { email: string; name: string; password: string } = req.body;
+  const { email, name, password }: RegisterBodyType = req.body;
 
   await User.alreadyExist({ email });
   const { salt, hashedPassword } = await hashPassword(password);
@@ -44,7 +41,7 @@ export const login: RequestHandler = async (
   req: Request,
   res: Response
 ): Promise<void> => {
-  const { email, password }: { email: string; password: string } = req.body;
+  const { email, password }: LoginBodyType = req.body;
 
   const user = (await User.doesNotExist({
     email

@@ -1,5 +1,10 @@
 import { createClient, RedisClientType } from 'redis';
-const client: RedisClientType = createClient();
+const client: RedisClientType = createClient({
+  socket: {
+    host: process.env.REDIS_HOST,
+    port: 6379
+  }
+});
 
 /**
  * Establish connection with redis server.
@@ -14,14 +19,6 @@ export const getCache = async (key: string): Promise<string | null> =>
   await client.get(key);
 
 /**
- * Cache a key value pair  in redis with no expiry.
- */
-export const saveCache = async (
-  key: string,
-  value: string
-): Promise<string | null> => client.SET(key, value);
-
-/**
  * Cache a key value pair  in redis with  expiry.
  */
 export const saveTempCache = async (
@@ -29,10 +26,3 @@ export const saveTempCache = async (
   seconds: number,
   value: string
 ): Promise<string | null> => client.setEx(key, seconds, value);
-
-/**
- * Delete cache if exist.
- *
- */
-export const deleteCache = async (key: string): Promise<number> =>
-  client.del(key);

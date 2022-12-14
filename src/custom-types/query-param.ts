@@ -7,3 +7,9 @@ export type CategoryListByParam = {
 export type ExpenseDeleteParam = {
   id?: number;
 };
+
+export type ExpenseListByParam = {
+  day?: number;
+  month?: number;
+  year?: number;
+};

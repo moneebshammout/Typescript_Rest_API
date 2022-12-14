@@ -33,4 +33,5 @@ const configDB: ConfigTs = {
     logging: false
   }
 };
+
 module.exports = configDB;
