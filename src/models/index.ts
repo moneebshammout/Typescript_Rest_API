@@ -33,21 +33,21 @@ const Expense = ExpenseInit(sequelize);
 User.hasMany(Category);
 Category.belongsTo(User, {
   foreignKey: {
-    name: 'user_id'
+    name: 'userId'
   }
 });
 
 User.hasMany(Expense);
 Expense.belongsTo(User, {
   foreignKey: {
-    name: 'user_id'
+    name: 'userId'
   }
 });
 
 Category.hasMany(Expense);
 Expense.belongsTo(Category, {
   foreignKey: {
-    name: 'category_id'
+    name: 'categoryId'
   }
 });
 

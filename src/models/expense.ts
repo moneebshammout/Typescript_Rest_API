@@ -2,12 +2,12 @@ import { DataTypes, Optional } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 import BaseModel from './base';
 
-interface ExpenseAttributes {
+export interface ExpenseAttributes {
   id?: number;
   userId: number;
-  category_id: number;
+  categoryId: number;
   amount: number;
-  spending_date: Date;
+  spendingDate: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -21,9 +21,9 @@ class Expense
 {
   declare id: number;
   declare userId: number;
-  declare category_id: number;
+  declare categoryId: number;
   declare amount: number;
-  declare spending_date: Date;
+  declare spendingDate: Date;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
 }
@@ -39,27 +39,41 @@ export default (sequelize: Sequelize) => {
       },
       userId: {
         type: DataTypes.BIGINT,
-        allowNull: false
+        allowNull: false,
+        field: 'user_id'
       },
-      category_id: {
+      categoryId: {
         type: DataTypes.BIGINT,
-        allowNull: false
+        allowNull: false,
+        field: 'category_id'
       },
       amount: {
         type: DataTypes.FLOAT,
         allowNull: false
       },
-      spending_date: {
+      spendingDate: {
         allowNull: false,
-        type: DataTypes.DATE
+        type: DataTypes.DATE,
+        field: 'spending_date'
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'created_at'
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'updated_at'
       }
     },
     {
       sequelize,
       modelName: 'expense',
       freezeTableName: true,
-      timestamps: true,
-      underscored: true
+      timestamps: true
     }
   );
   return Expense;

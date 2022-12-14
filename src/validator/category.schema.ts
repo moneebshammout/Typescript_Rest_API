@@ -13,8 +13,8 @@ export const updateSchema: ValidationChain[] = [
 
 export const ListBySchema = [
   oneOf([
-    numberSchema('id', 'param'),
-    stringSchema('name', 'param'),
-    numberSchema('userId', 'param')
+    numberSchema('id', 'query'),
+    stringSchema('name', 'query'),
+    numberSchema('userId', 'query')
   ])
 ];

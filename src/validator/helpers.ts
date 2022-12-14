@@ -54,6 +54,30 @@ export const numberSchema = (
 };
 
 /**
+ * Create float validation fields.
+ */
+export const floatSchema = (
+  attribute: string,
+  optional = false
+): ValidationChain => {
+  if (optional) {
+    return body(attribute)
+      .optional()
+      .isFloat()
+      .bail()
+      .withMessage('must be float');
+  }
+
+  return body(attribute)
+    .exists({ checkFalsy: true })
+    .bail()
+    .withMessage(`${attribute} is null`)
+    .isFloat()
+    .bail()
+    .withMessage('must be float');
+};
+
+/**
  * Create date validation field.
  */
 export const dateSchema = (

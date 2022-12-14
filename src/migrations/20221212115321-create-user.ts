@@ -28,10 +28,11 @@ module.exports = {
           type: DataTypes.STRING,
           allowNull: false
         },
-        last_login: {
+        lastLogin: {
           allowNull: false,
           type: DataTypes.DATE,
-          defaultValue: DataTypes.NOW
+          defaultValue: DataTypes.NOW,
+          field: 'last_login'
         },
         createdAt: {
           allowNull: false,

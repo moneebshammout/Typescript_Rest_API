@@ -8,6 +8,9 @@ import {
 import { statusCodes } from '../constants';
 import { HttpException } from '@utils/errors';
 
+/**
+ * A base class to create custom method for all instances.
+ */
 export default class BaseModel<
   ModelAttributes,
   CreationAttributes

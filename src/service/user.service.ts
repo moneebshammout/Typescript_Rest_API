@@ -27,7 +27,7 @@ export const register: RequestHandler = async (
     name,
     salt,
     password: hashedPassword,
-    last_login: currentDate()
+    lastLogin: currentDate()
   });
 
   const token: string = await generateAuthToken({ email, id: user.id });
@@ -49,6 +49,7 @@ export const login: RequestHandler = async (
   const user = (await User.doesNotExist({
     email
   })) as unknown as UserAttributes | null;
+  //it will not be null because it will throw an exception.
   if (user === null) return;
 
   await checkPassword(password, user.password);
@@ -59,14 +60,14 @@ export const login: RequestHandler = async (
     token = cachedSession;
   } else {
     token = await generateAuthToken({ email, id: user.id });
-    const last_login: Date = currentDate();
+    const lastLogin: Date = currentDate();
     await User.update(
       {
-        last_login
+        lastLogin
       },
       { where: { email } }
     );
-    user.last_login = last_login;
+    user.lastLogin = lastLogin;
   }
 
   res

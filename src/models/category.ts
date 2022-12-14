@@ -35,21 +35,32 @@ export default (sequelize: Sequelize) => {
       },
       userId: {
         type: DataTypes.BIGINT,
-        allowNull: false
+        allowNull: false,
+        field: 'user_id'
       },
-
       name: {
         type: DataTypes.STRING,
         unique: true,
         allowNull: false
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'created_at'
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'updated_at'
       }
     },
     {
       sequelize,
       modelName: 'category',
       freezeTableName: true,
-      timestamps: true,
-      underscored: true
+      timestamps: true
     }
   );
   return Category;

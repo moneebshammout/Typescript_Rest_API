@@ -3,3 +3,7 @@ export type CategoryListByParam = {
   name?: string;
   userId?: number;
 };
+
+export type ExpenseDeleteParam = {
+  id?: number;
+};

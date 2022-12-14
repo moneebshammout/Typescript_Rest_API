@@ -26,15 +26,15 @@ module.exports = {
           type: DataTypes.FLOAT,
           allowNull: false
         },
-        spending_date: {
+        spendingDate: {
           allowNull: false,
-          type: DataTypes.DATE
+          type: DataTypes.DATE,
+          field: 'spending_date'
         },
         createdAt: {
           allowNull: false,
           type: DataTypes.DATE,
           defaultValue: DataTypes.NOW,
-
           field: 'created_at'
         },
         updatedAt: {

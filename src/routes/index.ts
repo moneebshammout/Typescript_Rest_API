@@ -4,12 +4,14 @@ import path from 'path';
 import fs from 'fs';
 import userRouter from './user.rout';
 import categoryRouter from './category.rout';
+import expenseRouter from './expense.rout';
 import { statusCodes } from '../constants';
 
 const router: AsyncRouterInstance = AsyncRouter();
 
 router.use('/user', userRouter);
 router.use('/category', categoryRouter);
+router.use('/expense', expenseRouter);
 
 /**
  * Check server health
