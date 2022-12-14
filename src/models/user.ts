@@ -7,7 +7,7 @@ export interface UserAttributes {
   email: string;
   password: string;
   salt: string;
-  last_login: Date;
+  lastLogin: Date;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -24,7 +24,7 @@ export class User
   declare email: string;
   declare password: string;
   declare salt: string;
-  declare last_login: Date;
+  declare lastLogin: Date;
   declare readonly createdAt: Date;
   declare readonly updatedAt: Date;
 }
@@ -55,18 +55,30 @@ export default (sequelize: Sequelize): typeof User => {
         type: DataTypes.STRING,
         allowNull: false
       },
-      last_login: {
+      lastLogin: {
         allowNull: false,
         type: DataTypes.DATE,
-        defaultValue: DataTypes.NOW
+        defaultValue: DataTypes.NOW,
+        field: 'last_login'
+      },
+      createdAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'created_at'
+      },
+      updatedAt: {
+        allowNull: false,
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW,
+        field: 'updated_at'
       }
     },
     {
       sequelize,
       modelName: 'user',
       freezeTableName: true,
-      timestamps: true,
-      underscored: true
+      timestamps: true
     }
   );
   return User;
